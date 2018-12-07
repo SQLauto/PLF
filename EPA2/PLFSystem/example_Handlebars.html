@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../Scripts/handlebars.runtime-v4.0.12.js"> </script>
+    <script src="../Scripts/Ajax_Call_toJSON.js"></script>
+</head>
+<body>
+    <div id="myContainer"> </div>
+    <script id="myTemplate" type="text/x-handlebars-template">
+        {{#each pets}}
+        <div class="pet">
+            <div class="photo-colum">
+                <img src="{{photo}} " />
+            </div>
+            <div class="info-column">
+                <h2>{{name}}  <span class="species"> ({{species}})</span> </h2>
+              <p>Age: {{calculateAge birthYear}}</p>
+                {{#if favFoods}}
+                <h4 class="headline-bar"> Favorite Foods</h4>
+                <ul class="favorite-foods">
+                    {{#each favFoods}}
+                    <li>{{{this}}}</li>
+                    {{/each}}
+
+                </ul>
+                {{/if}}
+
+            </div>
+        </div>
+        {{/each}}
+    </script>
+</body>
+</html>
+
+<script>
+    var myDatasource = {
+        "pets": [
+            {
+                "name": "Purrsloud",
+                "species": "Cat",
+                "favFoods": ["wet food", "dry food", "<strong> any </string> food"],
+                "brithYear": 2016,
+                "phote": "https://learnwebcode.github.io/json-example/images/cat-2.jpg"
+            },
+            {
+                "name": "Barksalot",
+                "species": "Dog",
+                "brithYear": 2008,
+                "phote": "https://learnwebcode.github.io/json-example/images/dog-2.jpg"
+            },
+            {
+                "name": "Meowsalot",
+                "species": "Cat",
+                "favFoods": ["tuna", "catnip", "celery"],
+                "brithYear": 2013,
+                "phote": "https://learnwebcode.github.io/json-example/images/cat-1.jpg"
+            }
+        ]
+    }
+
+</script>

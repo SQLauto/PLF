@@ -1,0 +1,521 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif,'Arial Narrow';
+            font-size: small;
+        }
+
+        .FormTable1 {
+            width: 100%;
+            border-spacing: 0px;
+            border-collapse: separate;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        .FormTable1 td, th {
+            border: 1px solid grey;
+        }
+
+        .BDABox, .PLPBox2 {
+            background-color: floralwhite;
+            width: 99%;
+            font-family: Arial, sans-serif, 'Arial Narrow';
+            font-size: x-small;
+            border: 0px;
+        }
+
+        .BDABox2 {
+            background-color: floralwhite;
+            width: 100%;
+            color: black;
+            border: 0px;
+        }
+
+
+        .LabelP {
+            font-size: 12px;
+            vertical-align: top;
+            width: 20%;
+        }
+
+        #pageBody {
+            height: 600px;
+            width: 100%;
+            overflow: auto;
+        }
+
+        .imgButton {
+            width: 18px;
+            height: 18px;
+            padding-right: 25px;
+            margin-bottom: -5px;
+            border: 0px;
+        }
+
+        .linkbutton {
+            width: 180px;
+            height: 25px;
+            border: 1px outset grey;
+            padding: 3px 30px 2px 20px;
+            margin-left: 20px;
+        }
+
+            .linkbutton:hover {
+                background-color: lightskyblue;
+            }
+
+        #ButtonSave {
+            height: 25px;
+        }
+
+        .BDAtitle {
+            width: 20%;
+        }
+
+        .BDAtitle2 {
+            width: 80%;
+        }
+
+        .BottonTab {
+            height: 25px;
+            display: inline;
+            margin: 1px 0px 1px 0px;
+            margin-right: -3px;
+            padding: 3px 5px 0px 5px;
+            border: 1px solid lightsalmon;
+            border-top-left-radius: 9px;
+            border-top-right-radius: 9px;
+            border-radius: 9px 9px 0px 0px;
+            background-color: transparent;
+            width: 250px;
+        }
+
+        .selectedTab {
+            color: white;
+            border-top: 3px solid orange;
+            border-bottom: 2px solid dodgerblue;
+            background: dodgerblue; /* For browsers that do not support gradients */
+            background: -webkit-linear-gradient(lightblue,dodgerblue ); /* For Safari 5.1 to 6.0 */
+            background: -o-linear-gradient(lightblue,dodgerblue ); /* For Opera 11.1 to 12.0 */
+            background: -moz-linear-gradient(lightblue,dodgerblue); /* For Firefox 3.6 to 15 */
+            background: linear-gradient( lightblue,dodgerblue); /* Standard syntax */
+        }
+    </style>
+
+</head>
+<body>
+    <form id="Form1" method="post" runat="server">
+        
+        <div id="pageTop" runat="server">
+            <input id="ButtonSave" type="button" value="Save & Submit" />
+         
+            <a id="PrintPLF" href="#" runat="server" class="linkbutton" style="height:25px;">
+                <img alt="pdf file" src="../images/pdfReport.bmp" class="imgButton" />
+                View PDF Form
+            </a>
+            <a id="SignOffPLF" href="#" runat="server" class="linkbutton">
+                <img alt="sign off" src="../images/signature.png" class="imgButton" />
+                Sign Off Form
+            </a>
+            <a id="PublishPLF" href="#" runat="server" class="linkbutton">
+                <img alt="Publish" src="../images/publish.png" class="imgButton" />
+                Publish Form
+            </a>
+            <input id="LabelSaveResult" type="text" />
+            
+
+
+        </div>
+        <div style="text-align: center;">
+            <h2>
+                Toronto Catholic District School Board
+                <br />
+                K to 12 Professional Learning Form
+                <input id="LabelSchoolyear" type="text" vocab="2018-2019" readonly="readonly" /> 
+
+            </h2>
+        </div>
+        <div>
+            School Name:
+            <input id="LabelSchool" type="text" vocab="2018-2019" readonly="readonly" /> 
+            
+            <br />
+            Principal Name: <input id="LabelPrincipal" type="text" vocab="2018-2019" readonly="readonly" /> 
+            <asp:Label ID="LabelPrincipal" runat="server" Text="2018-2019"></asp:Label>
+            <br />
+            Superintendent: <input id="LabelSuperintendent" type="text" vocab="2018-2019" readonly="readonly" /> 
+          
+        </div>
+        <div>
+            Based on analysis of the data, in collaboration with staff identify a critical learning need area
+            or strategy that addresses the learning of your school community (i.e., numeracy, assessment,
+            problem solving, inquiry learning, learning skills, etc.)
+        </div>
+        <div id="PageTab" style="margin-bottom: -1px;">
+            <input id="Button1" type="button" value="button" />
+            <input id="Button1" type="button" value="button" />
+            <asp:Button ID="btnDataReview" runat="server" Text="Data Review" CssClass="BottonTab" />
+            <asp:Button ID="btnPlanning" runat="server" Text="Professional Learning Planning" CssClass="BottonTab" />
+            <asp:HiddenField ID="hfSelectedTab" runat="server" />
+
+
+        </div>
+        <div id="pageBody" runat="server">
+
+
+
+            <div id="FormContent" runat="server">
+                <div id="DataReview" runat="server">
+                    <table class="FormTable1">
+                        <%--
+                        <tr>
+                            <td colspan="5" style="text-align: center">
+                                <h3>DATA REVIEW </h3>
+                            </td>
+                        </tr>--%>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA01" runat="server" Text="BDA01" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA01" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA02" runat="server" Text="BDA02" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA02" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="BDAtitle">
+                                <asp:Label ID="LabelBDA11" runat="server" Text="BDA11" CssClass="LabelP"></asp:Label>
+                            </th>
+                            <th class="BDAtitle">
+                                <asp:Label ID="LabelBDA12" runat="server" Text="BDA12" CssClass="LabelP"></asp:Label>
+                            </th>
+                            <th class="BDAtitle">
+                                <asp:Label ID="LabelBDA13" runat="server" Text="BDA13" CssClass="LabelP"></asp:Label>
+                            </th>
+                            <th class="BDAtitle">
+                                <asp:Label ID="LabelBDA14" runat="server" Text="BDA14" CssClass="LabelP"></asp:Label>
+                            </th>
+                            <th class="BDAtitle">
+                                <asp:Label ID="LabelBDA15" runat="server" Text="BDA15" CssClass="LabelP"></asp:Label>
+                            </th>
+                        </tr>
+                        <tr style="height: 300px;">
+                            <td class="BDAtitle">
+                                <textarea id="TextBDA11" runat="server" textmode="MultiLine" class="BDABox" rows="25" cols="20"></textarea>
+                            </td>
+                            <td class="BDAtitle">
+                                <textarea id="TextBDA12" runat="server" textmode="MultiLine" class="BDABox" rows="25" cols="22"></textarea>
+                            </td>
+                            <td class="BDAtitle">
+                                <textarea id="TextBDA13" runat="server" textmode="MultiLine" class="BDABox" rows="25" cols="22"></textarea>
+                            </td>
+                            <td class="BDAtitle">
+                                <textarea id="TextBDA14" runat="server" textmode="MultiLine" class="BDABox" rows="25" cols="22"></textarea>
+                            </td>
+                            <td class="BDAtitle">
+                                <textarea id="TextBDA15" runat="server" textmode="MultiLine" class="BDABox" rows="25" cols="22"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA21" runat="server" Text="BDA21" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA21" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA22" runat="server" Text="BDA22" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA22" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA23" runat="server" Text="BDA23" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA23" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA24" runat="server" Text="BDA24" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA24" runat="server" textmode="MultiLine" class="PLPBox2" rows="15" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA25" runat="server" Text="BDA25" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA25" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelBDA26" runat="server" Text="BDA26" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle" colspan="4">
+                                <textarea id="TextBDA26" runat="server" textmode="MultiLine" class="PLPBox2" rows="18"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="PLPlanning" runat="server">
+                    <table class="FormTable1">
+                        <%--
+                        <tr>
+                            <td colspan="2" class="BDAtitle" style="text-align: center">
+                                <h3>PROFESSIONAL LEARNING PLANNING: </h3>
+                            </td>
+                        </tr>--%>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP11" runat="server" Text="PLP11" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP11" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP12" runat="server" Text="PLP12" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP12" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP13" runat="server" Text="PLP13" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP13" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP14" runat="server" Text="PLP14" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP14" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP15" runat="server" Text="PLP15" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP15" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP16" runat="server" Text="PLP16" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP16" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP17" runat="server" Text="PLP17" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP17" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP18" runat="server" Text="PLP18" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP18" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP19" runat="server" Text="PLP19" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP19" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="BDAtitle">
+                                <asp:Label ID="LabelPLP20" runat="server" Text="PLP20" CssClass="LabelP"></asp:Label>
+                            </td>
+                            <td class="BDAtitle2">
+                                <textarea id="TextPLP20" runat="server" textmode="MultiLine" class="PLPBox2" rows="10" cols="108"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="pageFooter" runat="server"></div>
+
+    </form>
+</body>
+</html>
+
+<script src="../Scripts/jquery-3.2.1.min.js"></script>
+<script src="../Scripts/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+    var UserID = $("#hfUserID").val();
+    var schoolyear = $("#hfSchoolyear").val();
+    var schoolcode = $("#hfSchoolcode").val();
+
+    var workingYear;
+
+
+
+    $(document).ready(function () {
+
+        $("#PLPlanning").hide();
+        $("#btnDataReview").addClass("selectedTab");
+        $("#btnPlanning").click(function () {
+            $("#DataReview").hide();
+            $("#PLPlanning").show();
+            $("#btnDataReview").removeClass("selectedTab")
+            $("#btnPlanning").addClass("selectedTab");
+            return false;
+        })
+        $("#btnDataReview").click(function () {
+            $("#DataReview").show();
+            $("#PLPlanning").hide();
+            $("#btnDataReview").addClass("selectedTab")
+            $("#btnPlanning").removeClass("selectedTab");
+            return false;
+        })
+        $(".BDABox").change(function (event) {
+            var id = $(this)[0].id; //event.id;
+            var code = id.replace("Text", "");
+            var value = $("#" + id).val();
+
+            SaveTextContent(code, value);
+        });
+
+        $(".PLPBox2").change(function (event) {
+            var id = $(this)[0].id; //event.id;
+            var code = id.replace("Text", "");
+            var value = $("#" + id).val();
+
+            SaveTextContent(code, value);
+        });
+        $(".PLPBox2").keydown(function (event) {
+            $("#LabelSaveResult").text("");
+        });
+        $("#PrintPLF").click(function (event) {
+            var rName = "PLFDocument"
+            window.open('PDFPrint.aspx?rID=' + rName + '&yID=' + schoolyear + '&sID=' + schoolcode + '&rType=' + 'PDF' + '&rBlank=' + 'N', "PrintForm", "width=800 height=600, top=50, left=50, toolbars=no, scrollbars=no,status=no,resizable=yes");
+
+        });
+        $("#SignOffPLF").click(function (event) {
+            var useRole = $("#hfUserRole").val()
+            if (useRole == "Principal" || useRole == "Admin") {
+                var signType = "School";
+                var result = window.showModalDialog("LearningFormSignOff.aspx?yID=" + schoolyear + "&sID=" + schoolcode + "&tID=" + signType, "singoff", "scroll:no;resizable:no;help:no;status:no;dialogTop:100;dialogLeft:100;dialogHeight:300px;dialogWidth:400px;");
+                if (result == UserID) {
+                    window.alert("Sign off form complete!");
+                }
+
+            }
+            else { window.alert("No Permission to sign off this Document.") }
+
+        });
+        $("#PublishPLF").click(function (event) {
+            var signedOff = $("#hfSignOffSO").val()
+            if (signedOff == "SignedOff") {
+                var signType = "Publish";
+                var result = window.showModalDialog("LearningFormPublish.aspx?yID=" + schoolyear + "&sID=" + schoolcode + "&tID=" + signType, "publish", "scroll:no;resizable:no;help:no;status:no;dialogTop:100;dialogLeft:100;dialogHeight:300px;dialogWidth:400px;");
+                if (result == UserID) {
+                    window.alert("Publish form complete!");
+                }
+
+            }
+            else { window.alert("Please have your school superintendet sign off first! ") }
+
+        });
+        $("#ButtonSave").click(function (event) {
+            // url ="https://webt.tcdsb.org/Webapi/PLF/Api/PLF/?schoolYear=20182019&schoolCode=0290"
+            return false;
+        });
+    });
+
+    function SaveTextContent(itemCode, value) {
+        var helptext = PLF.Models.WebService.SaveText(UserID, schoolyear, schoolcode, itemCode, value, onSuccess, onFailure);
+
+    }
+    function onSuccess(result) {
+        $("#LabelSaveResult").text("Save... : " + result);
+    }
+    function onFailure(result) {
+        $("#LabelSaveResult").text("Save... : " + result);
+    }
+
+
+    var quickAddButton = document.querySelector("#btnAjaxCallPost");
+    if (quickAddButton)
+    quickAddButton.addEventListener("click", function () {
+        var myPostData = {
+            "title": document.querySelector('.admin-quick-add [name="title"]').value,
+            "content": document.querySelector('.admin-quick-add [name="content"]').value,
+            "status": "publish"
+        }
+        var createPost = new XMLHttpRequest();
+        createPost.open("POST", "https://www.wordpress.com/wordpress/wp/v2/posts");
+        createPost.setRequestHeader("X-WP-Nonce", SerialziedNumber);
+        createPost.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        createPost.send(JSON.stringify(myPostData));
+        createPost.onreadystatechange = function () {
+            if (createPost.readyState === 4) {
+                if (createPost.status === 201) {
+                    document.querySelector('.admin-quick-add [name="title"]').value = "";
+                    document.querySelector('.admin-quick-add [name="content"]').value = "";
+                } else {
+                    alert("Error - try again.")
+                }
+            }
+        }
+    });
+        
+ 
+
+
+    function getmyJSONData() {
+        var myRequest = new XMLHttpRequest();
+        var myUrl = "https://webapp.tcdsb.org/LTO/api/postings";
+        myRequest.open('GET', myUrl);
+        myRequest.onload = function () {
+            var myData = JSON.parse(myRequest.responseText);
+            // console.log(myData[0]);
+            // console.log(myData[0].Title);
+            renderHTMLonPage(myData);
+        }
+        myRequest.send();
+        return myData;
+    }
+
+</script>
